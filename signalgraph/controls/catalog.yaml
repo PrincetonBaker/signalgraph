@@ -209,6 +209,18 @@ controls:
     severity: critical
     query_type: root_usage
     rationale: Root account has unlimited privileges and should be reserved for emergency use only
+  
+  - id: ISO-CHANGE-MGMT
+    title: Change Management Documentation
+    description: All production changes must be documented and approved
+    frameworks:
+      soc2: []
+      iso27001: [A.12.1.2, A.14.2.2]
+      pci: []
+      hipaa: []
+    severity: medium
+    query_type: admin_group_review
+    rationale: ISO 27001 requires documented change management processes
 
   - id: TWOFACTOR-001
     title: GitHub Organization Two-Factor Requirement
@@ -245,3 +257,51 @@ controls:
     severity: medium
     query_type: production_asset_owner
     rationale: Asset ownership ensures accountability for security and compliance
+
+  - id: PCI-CARDHOLDER
+    title: Cardholder Data Access Restrictions
+    description: Systems storing cardholder data must have restricted access and encryption
+    frameworks:
+      soc2: []
+      iso27001: []
+      pci: ["3.1", "3.2", "3.4"]
+      hipaa: []
+    severity: critical
+    query_type: production_asset_owner
+    rationale: PCI-DSS requires strict controls on cardholder data environments
+
+  - id: HIPAA-PHI-ACCESS
+    title: PHI Access Controls and Audit Logging
+    description: Systems with PHI must restrict access to authorized users only and log all access
+    frameworks:
+      soc2: []
+      iso27001: []
+      pci: []
+      hipaa: [164.308(a)(3)(i), 164.308(a)(3)(ii)(A), 164.312(a)(1)]
+    severity: critical
+    query_type: admin_group_review
+    rationale: HIPAA requires minimum necessary access to PHI and audit trails
+
+  - id: ISO-CHANGE-MGMT
+    title: Change Management Documentation
+    description: All production changes must be documented and approved
+    frameworks:
+      soc2: []
+      iso27001: [A.12.1.2, A.14.2.2]
+      pci: []
+      hipaa: []
+    severity: medium
+    query_type: admin_group_review
+    rationale: ISO 27001 requires documented change management processes
+
+  - id: SOC2-VENDOR-MGMT
+    title: Third-Party Vendor Security Assessment
+    description: All third-party vendors with data access must undergo security assessment
+    frameworks:
+      soc2: [CC9.1, CC9.2]
+      iso27001: []
+      pci: []
+      hipaa: []
+    severity: medium
+    query_type: admin_group_review
+    rationale: SOC 2 CC9 requires vendor management and oversight

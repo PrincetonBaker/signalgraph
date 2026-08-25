@@ -198,7 +198,8 @@ class Control(BaseModel):
     
     def applies_to_framework(self, framework: str) -> bool:
         """Check if this control applies to a given framework."""
-        return framework.lower() in self.frameworks
+        framework_lower = framework.lower()
+        return framework_lower in self.frameworks and len(self.frameworks[framework_lower]) > 0
 
 
 class ControlResult(BaseModel):

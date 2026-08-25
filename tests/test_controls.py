@@ -49,10 +49,11 @@ async def test_framework_filtering(temp_db):
     
     assert len(soc2_controls) > 0
     assert len(pci_controls) > 0
-    assert len(hipaa_controls) >= 0
+    assert len(hipaa_controls) > 0
     assert len(iso_controls) > 0
     
-    assert len(soc2_controls) != len(controls)
+    # Framework-specific controls should make counts different
+    assert len(soc2_controls) != len(pci_controls) or len(soc2_controls) != len(hipaa_controls)
     
     for control in soc2_controls:
         assert "soc2" in control.frameworks

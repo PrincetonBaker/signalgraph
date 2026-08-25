@@ -332,18 +332,28 @@ Run with `--exceptions exceptions.json`. Excepted controls show `EXCEPTION` stat
 
 ## CI/CD Integration
 
-The GitHub Action (`.github/workflows/grc-evaluation.yml`) runs on every push:
+The GitHub Action (`.github/workflows/grc-evaluation.yml`) runs on every push with two job types:
 
+**1. Test Job (Required Merge Gate)**
 ```yaml
-steps:
-  - Ingest from fixtures
-  - Correlate identities
-  - Evaluate controls for each framework (matrix)
-  - Upload reports + evidence as artifacts
-  - Fail if critical controls fail
+- Install dependencies
+- Run pytest
+- Must pass for PR merge
 ```
 
-Exit codes:
+**2. Framework Evaluation Jobs (Report Generation)**
+```yaml
+- Ingest from fixtures
+- Correlate identities
+- Evaluate controls for each framework (matrix: SOC 2, ISO 27001, PCI, HIPAA)
+- Generate reports and upload artifacts
+- Create GitHub job summary with pass/fail/critical counts
+- Do NOT fail on control failures (fixtures are designed to show findings)
+```
+
+**CI treats control failures as the report, not a test failure.** The fixture data is designed to demonstrate correlation findings, so controls are expected to fail. The test job validates that the platform code works; the evaluate jobs publish framework-specific compliance reports.
+
+CLI Exit Codes (when run manually):
 - **0**: All controls pass or excepted
 - **1**: Critical control failure
 

@@ -1,0 +1,16 @@
+{
+  "00g1a2b3c4d5e6f7g8": [
+    "00u1a2b3c4d5e6f7g8",
+    "00u2b3c4d5e6f7g8h9",
+    "00u5e6f7g8h9i0j1k2",
+    "00u7g8h9i0j1k2l3m4"
+  ],
+  "00g2b3c4d5e6f7g8h9": [
+    "00u1a2b3c4d5e6f7g8",
+    "00u3c4d5e6f7g8h9i0"
+  ],
+  "00g3c4d5e6f7g8h9i0": [
+    "00u1a2b3c4d5e6f7g8",
+    "00u2b3c4d5e6f7g8h9"
+  ]
+}

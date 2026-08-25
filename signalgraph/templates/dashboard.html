@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalGraph - GRC Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f7fa;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+        
+        .framework-selector {
+            background: white;
+            margin: 2rem auto;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: #e9ecef;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #495057;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .tab:hover {
+            background: #dee2e6;
+        }
+        
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem auto;
+        }
+        
+        .summary-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .summary-card h3 {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary-card .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        
+        .pass { color: #28a745; }
+        .fail { color: #dc3545; }
+        .except { color: #ffc107; }
+        .not-eval { color: #6c757d; }
+        
+        .controls-section {
+            background: white;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .controls-section h2 {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #f8f9fa;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .badge-pass { background: #d4edda; color: #155724; }
+        .badge-fail { background: #f8d7da; color: #721c24; }
+        .badge-exception { background: #fff3cd; color: #856404; }
+        .badge-not-eval { background: #e2e3e5; color: #383d41; }
+        
+        .badge-critical { background: #dc3545; color: white; }
+        .badge-high { background: #fd7e14; color: white; }
+        .badge-medium { background: #ffc107; color: #000; }
+        .badge-low { background: #6c757d; color: white; }
+        
+        .framework-mapping {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+        
+        .stats {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>SignalGraph</h1>
+            <p class="subtitle">Multi-source GRC posture platform with identity correlation</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="framework-selector">
+            <h3 style="margin-bottom: 1rem;">Select Compliance Framework</h3>
+            <div class="tabs">
+                {% for fw in frameworks %}
+                <a href="/dashboard?framework={{ fw.id }}" 
+                   class="tab {% if framework == fw.id %}active{% endif %}">
+                    {{ fw.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="summary">
+            <div class="summary-card">
+                <h3>Passing</h3>
+                <div class="number pass">{{ summary.passed }}</div>
+                <p>Controls meeting requirements</p>
+            </div>
+            
+            <div class="summary-card">
+                <h3>Failing</h3>
+                <div class="number fail">{{ summary.failed }}</div>
+                <p>Controls with violations</p>
+            </div>
+            
+            <div class="summary-card">
+                <h3>Excepted</h3>
+                <div class="number except">{{ summary.excepted }}</div>
+                <p>Risk-accepted controls</p>
+            </div>
+            
+            <div class="summary-card">
+                <h3>Not Evaluated</h3>
+                <div class="number not-eval">{{ summary.not_evaluated }}</div>
+                <p>Awaiting evaluation</p>
+            </div>
+        </div>
+        
+        <div class="controls-section">
+            <h2>Control Evaluation Results</h2>
+            <p style="margin-bottom: 1.5rem; color: #6c757d;">
+                Framework: <strong>{{ framework.upper() }}</strong> | 
+                Correlated Identities: <strong>{{ identity_count }}</strong>
+            </p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Control ID</th>
+                        <th>Title</th>
+                        <th>Framework Mapping</th>
+                        <th>Severity</th>
+                        <th>Status</th>
+                        <th>Pass/Fail/Except</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for control in controls %}
+                    <tr>
+                        <td><strong>{{ control.id }}</strong></td>
+                        <td>{{ control.title }}</td>
+                        <td class="framework-mapping">
+                            {% if control.frameworks %}
+                                {{ control.frameworks | join(', ') }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge badge-{{ control.severity }}">
+                                {{ control.severity.upper() }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if control.status == 'pass' %}
+                            <span class="badge badge-pass">PASS</span>
+                            {% elif control.status == 'fail' %}
+                            <span class="badge badge-fail">FAIL</span>
+                            {% elif control.status == 'exception' %}
+                            <span class="badge badge-exception">EXCEPTED</span>
+                            {% else %}
+                            <span class="badge badge-not-eval">NOT EVALUATED</span>
+                            {% endif %}
+                        </td>
+                        <td class="stats">
+                            {{ control.passed }} / {{ control.failed }} / {{ control.excepted }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="margin: 2rem auto; padding: 1rem; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <h3>API Endpoints</h3>
+            <ul style="margin-top: 1rem; line-height: 2;">
+                <li><code>GET /frameworks</code> - List all frameworks</li>
+                <li><code>GET /frameworks/{framework_id}/controls</code> - Get controls for a framework</li>
+                <li><code>GET /frameworks/{framework_id}/results</code> - Get results for a framework</li>
+                <li><code>GET /identities</code> - List all identities</li>
+                <li><code>GET /identities/{correlated_id}</code> - Identity 360 view</li>
+                <li><code>GET /controls</code> - List all controls</li>
+                <li><code>GET /results</code> - List control results</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+[
+  {
+    "Name": "example-prod-data",
+    "CreationDate": "2024-01-15T10:00:00Z",
+    "Region": "us-east-1",
+    "Encryption": {
+      "Enabled": true,
+      "Algorithm": "AES256"
+    },
+    "Public": false,
+    "Versioning": true,
+    "Tags": [
+      {"Key": "Environment", "Value": "production"},
+      {"Key": "DataClassification", "Value": "confidential"},
+      {"Key": "Owner", "Value": "alex.rivera@example.com"}
+    ]
+  },
+  {
+    "Name": "example-backup-logs",
+    "CreationDate": "2024-02-10T12:00:00Z",
+    "Region": "us-west-2",
+    "Encryption": {
+      "Enabled": true,
+      "Algorithm": "aws:kms"
+    },
+    "Public": false,
+    "Versioning": true,
+    "Tags": [
+      {"Key": "Environment", "Value": "production"},
+      {"Key": "DataClassification", "Value": "internal"},
+      {"Key": "Owner", "Value": "jordan.chen@example.com"}
+    ]
+  },
+  {
+    "Name": "example-public-assets",
+    "CreationDate": "2024-03-01T09:00:00Z",
+    "Region": "us-east-1",
+    "Encryption": {
+      "Enabled": false
+    },
+    "Public": true,
+    "Versioning": false,
+    "Tags": [
+      {"Key": "Environment", "Value": "production"},
+      {"Key": "DataClassification", "Value": "public"}
+    ]
+  },
+  {
+    "Name": "example-dev-scratch",
+    "CreationDate": "2024-04-05T11:00:00Z",
+    "Region": "us-east-1",
+    "Encryption": {
+      "Enabled": false
+    },
+    "Public": false,
+    "Versioning": false,
+    "Tags": [
+      {"Key": "Environment", "Value": "development"},
+      {"Key": "Owner", "Value": "casey.martinez@example.com"}
+    ]
+  }
+]

@@ -1,0 +1,141 @@
+[
+  {
+    "key": "SEC-101",
+    "id": "10001",
+    "fields": {
+      "summary": "Enable MFA for all admin accounts",
+      "description": "Morgan Taylor and Sam Williams do not have MFA enabled on privileged accounts",
+      "status": {
+        "name": "Open"
+      },
+      "priority": {
+        "name": "High"
+      },
+      "assignee": {
+        "displayName": "Alex Rivera",
+        "emailAddress": "alex.rivera@example.com"
+      },
+      "created": "2026-08-10T10:00:00.000+0000",
+      "updated": "2026-08-20T14:30:00.000+0000",
+      "labels": ["compliance", "mfa", "soc2"],
+      "customfield_10100": "CC6.1",
+      "customfield_10101": 7
+    }
+  },
+  {
+    "key": "SEC-102",
+    "id": "10002",
+    "fields": {
+      "summary": "Enable branch protection on frontend-app repository",
+      "description": "Production repository frontend-app lacks branch protection rules",
+      "status": {
+        "name": "Open"
+      },
+      "priority": {
+        "name": "Critical"
+      },
+      "assignee": {
+        "displayName": "Jordan Chen",
+        "emailAddress": "jordan.chen@example.com"
+      },
+      "created": "2026-08-15T09:00:00.000+0000",
+      "updated": "2026-08-24T16:00:00.000+0000",
+      "labels": ["compliance", "github", "code-review"],
+      "customfield_10100": "CC7.2",
+      "customfield_10101": 3
+    }
+  },
+  {
+    "key": "SEC-103",
+    "id": "10003",
+    "fields": {
+      "summary": "Remove access for terminated employee Sam Williams",
+      "description": "Sam Williams was deprovisioned from Okta on 2026-01-05 but still has active AWS IAM user and GitHub admin access",
+      "status": {
+        "name": "In Progress"
+      },
+      "priority": {
+        "name": "Critical"
+      },
+      "assignee": {
+        "displayName": "Alex Rivera",
+        "emailAddress": "alex.rivera@example.com"
+      },
+      "created": "2026-01-06T08:00:00.000+0000",
+      "updated": "2026-08-01T10:00:00.000+0000",
+      "labels": ["offboarding", "access-review", "critical"],
+      "customfield_10100": "A.9.2.6",
+      "customfield_10101": 120
+    }
+  },
+  {
+    "key": "SEC-104",
+    "id": "10004",
+    "fields": {
+      "summary": "Enable disk encryption on LAPTOP-MTAYLOR",
+      "description": "Morgan Taylor's laptop does not have disk encryption enabled",
+      "status": {
+        "name": "Open"
+      },
+      "priority": {
+        "name": "Medium"
+      },
+      "assignee": {
+        "displayName": "Morgan Taylor",
+        "emailAddress": "morgan.taylor@example.com"
+      },
+      "created": "2026-08-18T11:00:00.000+0000",
+      "updated": "2026-08-18T11:00:00.000+0000",
+      "labels": ["endpoint", "encryption", "hipaa"],
+      "customfield_10100": "164.312(a)(2)(iv)",
+      "customfield_10101": 5
+    }
+  },
+  {
+    "key": "SEC-105",
+    "id": "10005",
+    "fields": {
+      "summary": "Investigate GuardDuty finding for alex.rivera",
+      "description": "AWS GuardDuty detected unusual API activity from alex.rivera credentials",
+      "status": {
+        "name": "Resolved"
+      },
+      "priority": {
+        "name": "High"
+      },
+      "assignee": {
+        "displayName": "Jordan Chen",
+        "emailAddress": "jordan.chen@example.com"
+      },
+      "created": "2026-08-20T11:00:00.000+0000",
+      "updated": "2026-08-21T15:30:00.000+0000",
+      "resolutiondate": "2026-08-21T15:30:00.000+0000",
+      "labels": ["aws", "guardduty", "investigation"],
+      "customfield_10100": null,
+      "customfield_10101": null
+    }
+  },
+  {
+    "key": "SEC-106",
+    "id": "10006",
+    "fields": {
+      "summary": "Review and update IAM policies for S3 access",
+      "description": "Quarterly review of S3 bucket access policies",
+      "status": {
+        "name": "Open"
+      },
+      "priority": {
+        "name": "Low"
+      },
+      "assignee": {
+        "displayName": "Casey Martinez",
+        "emailAddress": "casey.martinez@example.com"
+      },
+      "created": "2026-08-01T09:00:00.000+0000",
+      "updated": "2026-08-01T09:00:00.000+0000",
+      "labels": ["aws", "access-review", "quarterly"],
+      "customfield_10100": "PCI-7.1",
+      "customfield_10101": 60
+    }
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "platform-api": {
+    "protected": true,
+    "required_status_checks": {
+      "enforcement_level": "non_admins",
+      "contexts": ["ci/tests", "security/scan"]
+    },
+    "required_pull_request_reviews": {
+      "dismissal_restrictions": {},
+      "dismiss_stale_reviews": true,
+      "require_code_owner_reviews": true,
+      "required_approving_review_count": 1
+    },
+    "enforce_admins": true
+  },
+  "frontend-app": {
+    "protected": false
+  },
+  "internal-tools": {
+    "protected": true,
+    "required_status_checks": {
+      "enforcement_level": "non_admins",
+      "contexts": ["ci/lint"]
+    },
+    "required_pull_request_reviews": {
+      "dismissal_restrictions": {},
+      "dismiss_stale_reviews": false,
+      "require_code_owner_reviews": false,
+      "required_approving_review_count": 1
+    },
+    "enforce_admins": false
+  }
+}

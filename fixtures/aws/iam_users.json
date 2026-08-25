@@ -1,0 +1,57 @@
+[
+  {
+    "UserName": "alex.rivera",
+    "UserId": "AIDACKCEVSQ6C2EXAMPLE",
+    "Arn": "arn:aws:iam::123456789012:user/alex.rivera",
+    "CreateDate": "2024-01-20T10:00:00Z",
+    "PasswordLastUsed": "2026-08-24T14:30:00Z",
+    "Tags": [
+      {"Key": "Email", "Value": "alex.rivera@example.com"},
+      {"Key": "EmployeeId", "Value": "EMP001"}
+    ]
+  },
+  {
+    "UserName": "jordan.chen",
+    "UserId": "AIDAI44QH8DHBEXAMPLE",
+    "Arn": "arn:aws:iam::123456789012:user/jordan.chen",
+    "CreateDate": "2024-02-15T09:00:00Z",
+    "PasswordLastUsed": "2026-08-25T08:15:00Z",
+    "Tags": [
+      {"Key": "Email", "Value": "jordan.chen@example.com"},
+      {"Key": "EmployeeId", "Value": "EMP002"}
+    ]
+  },
+  {
+    "UserName": "sam.williams",
+    "UserId": "AIDASAMPLEUSERIDEXAM",
+    "Arn": "arn:aws:iam::123456789012:user/sam.williams",
+    "CreateDate": "2023-11-25T12:00:00Z",
+    "PasswordLastUsed": "2025-12-20T11:00:00Z",
+    "Tags": [
+      {"Key": "Email", "Value": "sam.williams@example.com"},
+      {"Key": "EmployeeId", "Value": "EMP004"}
+    ]
+  },
+  {
+    "UserName": "casey.martinez",
+    "UserId": "AIDAEXAMPLEID123456",
+    "Arn": "arn:aws:iam::123456789012:user/casey.martinez",
+    "CreateDate": "2024-04-18T14:00:00Z",
+    "PasswordLastUsed": "2026-08-25T09:35:00Z",
+    "Tags": [
+      {"Key": "Email", "Value": "casey.martinez@example.com"},
+      {"Key": "EmployeeId", "Value": "EMP005"}
+    ]
+  },
+  {
+    "UserName": "riley.johnson",
+    "UserId": "AIDARILEYJOHNSONEXAM",
+    "Arn": "arn:aws:iam::123456789012:user/riley.johnson",
+    "CreateDate": "2024-05-10T10:00:00Z",
+    "PasswordLastUsed": "2026-06-12T13:00:00Z",
+    "Tags": [
+      {"Key": "Email", "Value": "riley.johnson@example.com"},
+      {"Key": "EmployeeId", "Value": "EMP006"}
+    ]
+  }
+]

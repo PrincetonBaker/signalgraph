@@ -1,0 +1,113 @@
+name: GRC Control Evaluation
+
+on:
+  push:
+    branches: [main, baker-*]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Tests (Required)
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      
+      - name: Run tests
+        run: |
+          pytest tests/ -v
+  
+  evaluate:
+    runs-on: ubuntu-latest
+    name: Framework Report (${{ matrix.framework }})
+    strategy:
+      matrix:
+        framework: [soc2, iso27001, pci, hipaa]
+      fail-fast: false
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      
+      - name: Ingest data from fixtures
+        run: |
+          signalgraph ingest --db-path signalgraph-${{ matrix.framework }}.db
+      
+      - name: Correlate identities
+        run: |
+          signalgraph correlate --db-path signalgraph-${{ matrix.framework }}.db
+      
+      - name: Evaluate controls for ${{ matrix.framework }}
+        id: evaluate
+        run: |
+          set +e
+          signalgraph evaluate --db-path signalgraph-${{ matrix.framework }}.db --framework ${{ matrix.framework }} > eval-output.txt 2>&1
+          EVAL_EXIT=$?
+          cat eval-output.txt
+          
+          # Parse results from output
+          PASSED=$(grep -oP 'Passed: \K\d+' eval-output.txt || echo "0")
+          FAILED=$(grep -oP 'Failed: \K\d+' eval-output.txt || echo "0")
+          EXCEPTED=$(grep -oP 'Excepted: \K\d+' eval-output.txt || echo "0")
+          CRITICAL=$(grep -oP '\K\d+(?= critical control)' eval-output.txt || echo "0")
+          
+          echo "passed=$PASSED" >> $GITHUB_OUTPUT
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          echo "excepted=$EXCEPTED" >> $GITHUB_OUTPUT
+          echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+          
+          # Control failures are expected in fixtures - not a CI failure
+          exit 0
+      
+      - name: Generate report
+        if: always()
+        run: |
+          signalgraph report \
+            --db-path signalgraph-${{ matrix.framework }}.db \
+            --framework ${{ matrix.framework }} \
+            --output report-${{ matrix.framework }}.json
+      
+      - name: Create job summary
+        if: always()
+        run: |
+          echo "## ${{ matrix.framework }} Control Evaluation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | Count |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| ✅ Passed | ${{ steps.evaluate.outputs.passed }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ❌ Failed | ${{ steps.evaluate.outputs.failed }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ⚠️ Excepted | ${{ steps.evaluate.outputs.excepted }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🔴 Critical | ${{ steps.evaluate.outputs.critical }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "_Fixture findings are expected - this is a demonstration of the platform._" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: grc-report-${{ matrix.framework }}
+          path: report-${{ matrix.framework }}.json
+          if-no-files-found: ignore

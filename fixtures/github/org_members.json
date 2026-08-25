@@ -1,0 +1,62 @@
+[
+  {
+    "login": "alex-rivera",
+    "id": 12345678,
+    "node_id": "MDQ6VXNlcjEyMzQ1Njc4",
+    "type": "User",
+    "site_admin": false,
+    "role": "admin",
+    "two_factor_authentication": true,
+    "email": "alex.rivera@example.com"
+  },
+  {
+    "login": "jordan-chen",
+    "id": 23456789,
+    "node_id": "MDQ6VXNlcjIzNDU2Nzg5",
+    "type": "User",
+    "site_admin": false,
+    "role": "admin",
+    "two_factor_authentication": true,
+    "email": "jordan.chen@example.com"
+  },
+  {
+    "login": "morgan-taylor",
+    "id": 34567890,
+    "node_id": "MDQ6VXNlcjM0NTY3ODkw",
+    "type": "User",
+    "site_admin": false,
+    "role": "member",
+    "two_factor_authentication": false,
+    "email": "morgan.taylor@example.com"
+  },
+  {
+    "login": "sam-williams-dev",
+    "id": 45678901,
+    "node_id": "MDQ6VXNlcjQ1Njc4OTAx",
+    "type": "User",
+    "site_admin": false,
+    "role": "admin",
+    "two_factor_authentication": false,
+    "email": "sam.williams@example.com"
+  },
+  {
+    "login": "casey-codes",
+    "id": 56789012,
+    "node_id": "MDQ6VXNlcjU2Nzg5MDEy",
+    "type": "User",
+    "site_admin": false,
+    "role": "member",
+    "two_factor_authentication": true,
+    "email": "casey.martinez@example.com"
+  },
+  {
+    "login": "dakota-brown",
+    "id": 67890123,
+    "node_id": "MDQ6VXNlcjY3ODkwMTIz",
+    "type": "User",
+    "site_admin": false,
+    "role": "member",
+    "two_factor_authentication": true,
+    "email": "dakota.brown@example.com"
+  }
+]

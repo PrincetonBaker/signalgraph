@@ -1,0 +1,22 @@
+{
+  "alex.rivera": [
+    {
+      "SerialNumber": "arn:aws:iam::123456789012:mfa/alex.rivera",
+      "EnableDate": "2024-01-20T11:00:00Z"
+    }
+  ],
+  "jordan.chen": [
+    {
+      "SerialNumber": "arn:aws:iam::123456789012:mfa/jordan.chen",
+      "EnableDate": "2024-02-15T10:00:00Z"
+    }
+  ],
+  "casey.martinez": [
+    {
+      "SerialNumber": "arn:aws:iam::123456789012:mfa/casey.martinez",
+      "EnableDate": "2024-04-18T15:00:00Z"
+    }
+  ],
+  "sam.williams": [],
+  "riley.johnson": []
+}

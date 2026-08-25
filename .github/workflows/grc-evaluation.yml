@@ -110,10 +110,12 @@ jobs:
         with:
           name: grc-report-${{ matrix.framework }}
           path: report-${{ matrix.framework }}.json
+          if-no-files-found: ignore
       
       - name: Upload evidence
-        if: always()
+        if: always() && hashFiles('evidence/**') != ''
         uses: actions/upload-artifact@v4
         with:
           name: evidence-${{ matrix.framework }}
           path: evidence/
+          if-no-files-found: ignore

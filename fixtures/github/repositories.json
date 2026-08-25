@@ -1,0 +1,47 @@
+[
+  {
+    "name": "platform-api",
+    "full_name": "example-org/platform-api",
+    "private": true,
+    "owner": {
+      "login": "example-org",
+      "type": "Organization"
+    },
+    "created_at": "2024-01-10T10:00:00Z",
+    "updated_at": "2026-08-24T16:00:00Z",
+    "pushed_at": "2026-08-24T16:00:00Z",
+    "default_branch": "main",
+    "is_production": true,
+    "admin_users": ["alex-rivera", "jordan-chen"]
+  },
+  {
+    "name": "frontend-app",
+    "full_name": "example-org/frontend-app",
+    "private": true,
+    "owner": {
+      "login": "example-org",
+      "type": "Organization"
+    },
+    "created_at": "2024-02-05T11:00:00Z",
+    "updated_at": "2026-08-25T09:00:00Z",
+    "pushed_at": "2026-08-25T09:00:00Z",
+    "default_branch": "main",
+    "is_production": true,
+    "admin_users": ["sam-williams-dev"]
+  },
+  {
+    "name": "internal-tools",
+    "full_name": "example-org/internal-tools",
+    "private": true,
+    "owner": {
+      "login": "example-org",
+      "type": "Organization"
+    },
+    "created_at": "2024-03-15T14:00:00Z",
+    "updated_at": "2026-08-20T12:00:00Z",
+    "pushed_at": "2026-08-20T12:00:00Z",
+    "default_branch": "main",
+    "is_production": false,
+    "admin_users": ["casey-codes", "dakota-brown"]
+  }
+]

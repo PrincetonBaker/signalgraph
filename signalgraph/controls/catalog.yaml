@@ -1,0 +1,247 @@
+controls:
+  - id: MFA-001
+    title: Multi-Factor Authentication for Privileged Users
+    description: All users with administrative privileges must have MFA enabled across all systems where they hold admin rights
+    frameworks:
+      soc2: [CC6.1, CC6.2]
+      iso27001: [A.9.4.2, A.9.4.3]
+      pci: [8.3.1, 8.3.2]
+      hipaa: [164.312(a)(2)(i)]
+    severity: critical
+    query_type: identity_mfa_admin
+    rationale: MFA prevents unauthorized access even if credentials are compromised. Critical for privileged accounts.
+
+  - id: MFA-002
+    title: Multi-Factor Authentication for All Active Users
+    description: All active users should have MFA enabled in the primary IdP
+    frameworks:
+      soc2: [CC6.1]
+      iso27001: [A.9.4.2]
+      pci: [8.3.1]
+      hipaa: [164.312(a)(2)(i)]
+    severity: high
+    query_type: identity_mfa_all
+    rationale: Defense in depth - MFA for all users reduces phishing and credential theft risks
+
+  - id: TERM-001
+    title: Terminated Employee Access Removal
+    description: Employees deactivated in Okta must not have active access in AWS, GitHub, or other systems
+    frameworks:
+      soc2: [CC6.1, CC6.2, CC6.3]
+      iso27001: [A.9.2.6]
+      pci: [8.1.3, 8.1.4]
+      hipaa: [164.308(a)(3)(ii)(C)]
+    severity: critical
+    query_type: jml_leaver
+    rationale: Terminated employees with standing access create significant security and compliance risk
+
+  - id: TERM-002
+    title: Dormant Account Activity Monitoring
+    description: Accounts dormant in Okta (>90 days) should not have recent activity in other systems
+    frameworks:
+      soc2: [CC6.1]
+      iso27001: [A.9.2.5, A.9.2.6]
+      pci: [8.1.4]
+      hipaa: []
+    severity: high
+    query_type: jml_dormant
+    rationale: Dormant accounts with activity may indicate compromised credentials or orphaned access
+
+  - id: ORPHAN-001
+    title: Orphan Identity Detection
+    description: Identities in AWS, GitHub, or EDR that do not correspond to an active Okta user
+    frameworks:
+      soc2: [CC6.2]
+      iso27001: [A.9.2.1]
+      pci: [8.1.1, 8.1.2]
+      hipaa: [164.308(a)(3)(ii)(B)]
+    severity: high
+    query_type: orphan_identity
+    rationale: Orphan identities bypass centralized identity management and access review processes
+
+  - id: ENCRYPT-001
+    title: Encryption at Rest for Production Data
+    description: Production S3 buckets must have encryption enabled
+    frameworks:
+      soc2: [CC6.7]
+      iso27001: [A.10.1.1, A.10.1.2]
+      pci: ["3.4", "3.5.1"]
+      hipaa: [164.312(a)(2)(iv), 164.312(e)(2)(ii)]
+    severity: high
+    query_type: asset_encryption
+    query_params:
+      asset_type: storage
+      is_production: true
+    rationale: Encryption at rest protects against unauthorized physical access to storage media
+
+  - id: PUBLIC-001
+    title: Public Exposure Controls
+    description: Production S3 buckets should not be publicly accessible unless explicitly documented
+    frameworks:
+      soc2: [CC6.6, CC6.7]
+      iso27001: [A.13.1.3]
+      pci: ["1.2.1", "1.3.1"]
+      hipaa: [164.312(a)(1), 164.312(e)(1)]
+    severity: critical
+    query_type: asset_public
+    query_params:
+      is_production: true
+    rationale: Public production buckets risk data exposure and compliance violations
+
+  - id: REPO-001
+    title: Production Repository Branch Protection
+    description: Production GitHub repositories must have branch protection enabled on the default branch
+    frameworks:
+      soc2: [CC7.2, CC8.1]
+      iso27001: [A.14.2.2, A.14.2.5]
+      pci: ["6.3.2", "6.5.3"]
+      hipaa: []
+    severity: high
+    query_type: repo_branch_protection
+    rationale: Branch protection prevents unauthorized code changes and enforces code review
+
+  - id: REPO-002
+    title: Repository Admin Correlation
+    description: GitHub repository admins must be active users in Okta and members of an authorized admin group
+    frameworks:
+      soc2: [CC6.2, CC7.2]
+      iso27001: [A.9.2.3]
+      pci: ["7.2.2"]
+      hipaa: []
+    severity: high
+    query_type: repo_admin_correlation
+    rationale: Repository admin rights should align with organizational authorization processes
+
+  - id: ENDPOINT-001
+    title: Endpoint Disk Encryption
+    description: All endpoints with access to sensitive data must have disk encryption enabled
+    frameworks:
+      soc2: [CC6.7]
+      iso27001: [A.8.2.3, A.10.1.1]
+      pci: ["3.4", "9.6"]
+      hipaa: [164.312(a)(2)(iv), 164.312(d)]
+    severity: high
+    query_type: endpoint_encryption
+    rationale: Disk encryption protects sensitive data if a device is lost or stolen
+
+  - id: ENDPOINT-002
+    title: Endpoint Sensor Health
+    description: All active endpoints must have a healthy EDR sensor (not stale, not offline)
+    frameworks:
+      soc2: [CC7.2, CC7.3]
+      iso27001: [A.12.2.1]
+      pci: ["5.1", "5.2"]
+      hipaa: [164.308(a)(5)(ii)(B)]
+    severity: high
+    query_type: endpoint_sensor_health
+    rationale: Healthy EDR sensors enable threat detection and incident response
+
+  - id: FINDING-001
+    title: Critical Security Findings Have Tickets
+    description: All open critical security findings must have a corresponding Jira ticket
+    frameworks:
+      soc2: [CC7.3, CC7.4]
+      iso27001: [A.16.1.4, A.16.1.5]
+      pci: ["6.2", "11.2.1"]
+      hipaa: [164.308(a)(1)(ii)(B)]
+    severity: high
+    query_type: finding_has_ticket
+    query_params:
+      severity: critical
+    rationale: Critical findings require tracked remediation to ensure timely resolution
+
+  - id: FINDING-002
+    title: High/Critical Finding SLA Compliance
+    description: High and critical findings must have tickets resolved within SLA (critical <=7d, high <=30d)
+    frameworks:
+      soc2: [CC7.4]
+      iso27001: [A.16.1.5]
+      pci: ["6.2"]
+      hipaa: [164.308(a)(1)(ii)(B)]
+    severity: high
+    query_type: finding_sla
+    rationale: Timely remediation of high-severity findings reduces organizational risk
+
+  - id: GUARDDUTY-001
+    title: GuardDuty Finding Response
+    description: AWS GuardDuty findings with severity >= 7.0 must have investigation tickets
+    frameworks:
+      soc2: [CC7.3, CC7.4]
+      iso27001: [A.16.1.4]
+      pci: ["11.4", "12.10.1"]
+      hipaa: []
+    severity: high
+    query_type: guardduty_ticket
+    rationale: Cloud security findings require investigation to detect and respond to threats
+
+  - id: ACCESS-001
+    title: Least Privilege - Admin Group Membership
+    description: Only authorized users should be members of admin groups in Okta
+    frameworks:
+      soc2: [CC6.2, CC6.3]
+      iso27001: [A.9.2.3]
+      pci: ["7.1.2", "7.2.2"]
+      hipaa: [164.308(a)(3)(ii)(B), 164.308(a)(4)(ii)(B)]
+    severity: medium
+    query_type: admin_group_review
+    rationale: Admin privileges should be granted only to those who require them
+
+  - id: CLOUDTRAIL-001
+    title: CloudTrail Logging Enabled
+    description: AWS CloudTrail must be enabled for audit logging (verified via fixture presence)
+    frameworks:
+      soc2: [CC7.2]
+      iso27001: [A.12.4.1]
+      pci: ["10.1", "10.2.1"]
+      hipaa: [164.312(b)]
+    severity: high
+    query_type: cloudtrail_enabled
+    rationale: Audit logs are essential for security monitoring and forensic investigation
+
+  - id: ROOT-001
+    title: AWS Root Account Usage
+    description: AWS root account credentials should not be used for day-to-day operations
+    frameworks:
+      soc2: [CC6.1, CC6.2]
+      iso27001: [A.9.2.3]
+      pci: ["2.1", "7.2.1"]
+      hipaa: []
+    severity: critical
+    query_type: root_usage
+    rationale: Root account has unlimited privileges and should be reserved for emergency use only
+
+  - id: TWOFACTOR-001
+    title: GitHub Organization Two-Factor Requirement
+    description: All GitHub organization members must have 2FA enabled
+    frameworks:
+      soc2: [CC6.1]
+      iso27001: [A.9.4.2]
+      pci: [8.3.1]
+      hipaa: []
+    severity: high
+    query_type: github_2fa
+    rationale: 2FA prevents unauthorized access to source code and CI/CD systems
+
+  - id: EDR-OWNER-001
+    title: Endpoint Owner Correlation
+    description: All endpoints must have an identifiable owner who is an active Okta user
+    frameworks:
+      soc2: [CC6.2]
+      iso27001: [A.8.1.3]
+      pci: ["12.3"]
+      hipaa: []
+    severity: medium
+    query_type: endpoint_owner_correlation
+    rationale: Endpoint ownership accountability enables access review and incident response
+
+  - id: PROD-OWNER-001
+    title: Production Asset Ownership
+    description: Production assets (S3, repositories) must have an identified owner
+    frameworks:
+      soc2: [CC6.2]
+      iso27001: [A.8.1.1, A.8.1.2]
+      pci: ["12.3.4"]
+      hipaa: []
+    severity: medium
+    query_type: production_asset_owner
+    rationale: Asset ownership ensures accountability for security and compliance

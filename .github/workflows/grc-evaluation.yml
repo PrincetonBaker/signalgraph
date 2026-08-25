@@ -1,0 +1,72 @@
+name: GRC Control Evaluation
+
+on:
+  push:
+    branches: [main, baker-*]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        framework: [soc2, iso27001, pci, hipaa]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+      
+      - name: Ingest data from fixtures
+        run: |
+          signalgraph ingest --db-path signalgraph-${{ matrix.framework }}.db
+      
+      - name: Correlate identities
+        run: |
+          signalgraph correlate --db-path signalgraph-${{ matrix.framework }}.db
+      
+      - name: Evaluate controls for ${{ matrix.framework }}
+        id: evaluate
+        run: |
+          signalgraph evaluate --db-path signalgraph-${{ matrix.framework }}.db --framework ${{ matrix.framework }}
+        continue-on-error: true
+      
+      - name: Generate report
+        if: always()
+        run: |
+          signalgraph report \
+            --db-path signalgraph-${{ matrix.framework }}.db \
+            --framework ${{ matrix.framework }} \
+            --output report-${{ matrix.framework }}.json
+      
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: grc-report-${{ matrix.framework }}
+          path: report-${{ matrix.framework }}.json
+      
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ matrix.framework }}
+          path: evidence/
+      
+      - name: Check evaluation result
+        if: steps.evaluate.outcome == 'failure'
+        run: |
+          echo "::error::Critical control failures detected for ${{ matrix.framework }}"
+          exit 1

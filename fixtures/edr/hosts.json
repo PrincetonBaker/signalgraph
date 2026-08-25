@@ -1,0 +1,142 @@
+[
+  {
+    "device_id": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
+    "hostname": "LAPTOP-ARIVERA",
+    "platform": "Windows",
+    "os_version": "Windows 11 Pro",
+    "mac_address": "00:11:22:33:44:55",
+    "local_ip": "192.168.1.100",
+    "external_ip": "203.0.113.10",
+    "agent_version": "7.08.16303",
+    "last_seen": "2026-08-25T10:30:00Z",
+    "first_seen": "2024-01-20T09:00:00Z",
+    "status": "normal",
+    "sensor_health": "healthy",
+    "disk_encryption": true,
+    "owner": {
+      "email": "alex.rivera@example.com",
+      "employee_id": "EMP001"
+    },
+    "tags": ["engineering", "active"]
+  },
+  {
+    "device_id": "b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7",
+    "hostname": "MACBOOK-JCHEN",
+    "platform": "Mac",
+    "os_version": "macOS 14.5",
+    "mac_address": "00:22:33:44:55:66",
+    "local_ip": "192.168.1.105",
+    "external_ip": "203.0.113.15",
+    "agent_version": "7.08.16303",
+    "last_seen": "2026-08-25T11:00:00Z",
+    "first_seen": "2024-02-18T10:00:00Z",
+    "status": "normal",
+    "sensor_health": "healthy",
+    "disk_encryption": true,
+    "owner": {
+      "email": "jordan.chen@example.com",
+      "employee_id": "EMP002"
+    },
+    "tags": ["engineering", "admin", "active"]
+  },
+  {
+    "device_id": "c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8",
+    "hostname": "LAPTOP-MTAYLOR",
+    "platform": "Windows",
+    "os_version": "Windows 10 Pro",
+    "mac_address": "00:33:44:55:66:77",
+    "local_ip": "192.168.1.110",
+    "external_ip": "203.0.113.20",
+    "agent_version": "7.08.16303",
+    "last_seen": "2026-08-24T18:00:00Z",
+    "first_seen": "2024-03-10T11:00:00Z",
+    "status": "normal",
+    "sensor_health": "healthy",
+    "disk_encryption": false,
+    "owner": {
+      "email": "morgan.taylor@example.com",
+      "employee_id": "EMP003"
+    },
+    "tags": ["security", "active"]
+  },
+  {
+    "device_id": "d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9",
+    "hostname": "DESKTOP-SWILLIAMS",
+    "platform": "Windows",
+    "os_version": "Windows 11 Pro",
+    "mac_address": "00:44:55:66:77:88",
+    "local_ip": "192.168.1.115",
+    "external_ip": "203.0.113.25",
+    "agent_version": "7.06.15107",
+    "last_seen": "2025-12-18T10:00:00Z",
+    "first_seen": "2023-11-30T09:00:00Z",
+    "status": "offline",
+    "sensor_health": "stale",
+    "disk_encryption": true,
+    "owner": {
+      "email": "sam.williams@example.com",
+      "employee_id": "EMP004"
+    },
+    "tags": ["engineering", "inactive"]
+  },
+  {
+    "device_id": "e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
+    "hostname": "LAPTOP-CMARTINEZ",
+    "platform": "Linux",
+    "os_version": "Ubuntu 22.04 LTS",
+    "mac_address": "00:55:66:77:88:99",
+    "local_ip": "192.168.1.120",
+    "external_ip": "203.0.113.30",
+    "agent_version": "7.08.16303",
+    "last_seen": "2026-08-25T09:45:00Z",
+    "first_seen": "2024-04-22T13:00:00Z",
+    "status": "normal",
+    "sensor_health": "healthy",
+    "disk_encryption": true,
+    "owner": {
+      "email": "casey.martinez@example.com",
+      "employee_id": "EMP005"
+    },
+    "tags": ["engineering", "active"]
+  },
+  {
+    "device_id": "f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1",
+    "hostname": "LAPTOP-RJOHNSON",
+    "platform": "Mac",
+    "os_version": "macOS 13.4",
+    "mac_address": "00:66:77:88:99:AA",
+    "local_ip": "192.168.1.125",
+    "external_ip": "203.0.113.35",
+    "agent_version": "7.07.15804",
+    "last_seen": "2026-06-15T12:00:00Z",
+    "first_seen": "2024-05-12T10:00:00Z",
+    "status": "containment",
+    "sensor_health": "degraded",
+    "disk_encryption": true,
+    "owner": {
+      "email": "riley.johnson@example.com",
+      "employee_id": "EMP006"
+    },
+    "tags": ["engineering", "suspended"]
+  },
+  {
+    "device_id": "g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2",
+    "hostname": "MACBOOK-DBROWN",
+    "platform": "Mac",
+    "os_version": "macOS 14.5",
+    "mac_address": "00:77:88:99:AA:BB",
+    "local_ip": "192.168.1.130",
+    "external_ip": "203.0.113.40",
+    "agent_version": "7.08.16303",
+    "last_seen": "2026-08-25T11:20:00Z",
+    "first_seen": "2024-06-20T08:00:00Z",
+    "status": "normal",
+    "sensor_health": "healthy",
+    "disk_encryption": true,
+    "owner": {
+      "email": "dakota.brown@example.com",
+      "employee_id": "EMP007"
+    },
+    "tags": ["engineering", "active"]
+  }
+]

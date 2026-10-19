@@ -332,7 +332,14 @@ Run with `--exceptions exceptions.json`. Excepted controls show `EXCEPTION` stat
 
 ## CI/CD Integration
 
-The GitHub Action (`.github/workflows/grc-evaluation.yml`) runs on every push with two job types:
+The GitHub Action (`.github/workflows/grc-evaluation.yml`), named **GRC Control Evaluation**, runs:
+
+- on every push to `main` and `baker-*` branches
+- on pull requests targeting `main`
+- every day at 09:00 UTC (`0 9 * * *`)
+- when started manually (`workflow_dispatch`)
+
+It has two job types:
 
 **1. Test Job (Required Merge Gate)**
 ```yaml
@@ -352,6 +359,20 @@ The GitHub Action (`.github/workflows/grc-evaluation.yml`) runs on every push wi
 ```
 
 **CI treats control failures as the report, not a test failure.** The fixture data is designed to demonstrate correlation findings, so controls are expected to fail. The test job validates that the platform code works; the evaluate jobs publish framework-specific compliance reports.
+
+### Keeping the daily schedule enabled
+
+GitHub disables the `schedule` trigger on a public repository after 60 days without repository activity. A scheduled run does not count. A commit on the default branch does. Merging ordinary maintenance onto `main` is what keeps this daily evaluation running.
+
+If the workflow is already disabled, a new commit does not turn the schedule back on. Re-enable it first:
+
+1. Open the **Actions** tab.
+2. Select **GRC Control Evaluation**.
+3. Click **Enable workflow**.
+
+The GitHub CLI equivalent is `gh workflow enable grc-evaluation.yml`.
+
+This repo does not add a keepalive workflow. Actions that push empty commits, or that call the workflow-enable API on a timer, exist to get around the inactivity rule. In April 2025 GitHub disabled the widely used `gautamkrishnar/keepalive-workflow` action and treated that pattern as a Terms of Service violation. A keepalive schedule is subject to the same 60-day disable, so it cannot revive a workflow that is already off. It also needs write permission and can retrigger this evaluation on every synthetic commit.
 
 CLI Exit Codes (when run manually):
 - **0**: All controls pass or excepted
@@ -418,7 +439,7 @@ SignalGraph is the correlation engine Vanta custom tests need.
 - **FastAPI + Jinja2** for REST API + dashboard
 - **YAML control catalog** for easy auditing
 - **Pytest** with fixture-based tests (no mocks)
-- **GitHub Actions** for continuous evaluation
+- **GitHub Actions** for continuous evaluation, including a daily schedule
 - **MIT license**
 
 ---
